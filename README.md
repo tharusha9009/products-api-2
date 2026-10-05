@@ -1,78 +1,93 @@
 # Products API
 
-This project is a simple Spring Boot REST API created as a learning exercise for Week 1 of the Spring Boot tutorial series. The repository demonstrates how to set up a basic web application, expose HTTP endpoints, and return simple responses in JSON or plain text.
+This project is a beginner-friendly Spring Boot application created as part of a Java web development tutorial. The main goal is to help students understand how a REST API is structured, how Spring Boot starts an application, and how HTTP requests are mapped to Java methods.
 
-## Purpose of the project
+## Project purpose
 
-The main goal of this project is to introduce the fundamentals of a REST API built with Java and Spring Boot. It is intended to help students and developers understand:
+The repository demonstrates the fundamentals of building a simple API with Java and Spring Boot. It introduces the following concepts:
 
-- how a Spring Boot application starts
-- how controllers map HTTP routes
-- how a basic API responds to client requests
-- how application configuration is managed
-- how simple Java model objects can be used in a web application
+- creating a Spring Boot application
+- running an embedded web server
+- exposing REST endpoints with `@RestController`
+- returning simple responses from Java methods
+- organizing basic application classes and configuration
 
-Although the name suggests a product API, this repository is currently a starter project focused on learning API concepts rather than a full production-ready ecommerce backend.
+Although the project is named `products-api`, it is currently a learning starter project rather than a full production ecommerce backend. The focus is on learning the architecture and mechanics of a web API.
 
-## Architecture
+## Architecture overview
 
-The application follows a very simple layered structure typical of a Spring Boot beginner project:
+The application follows a small, straightforward Spring Boot structure:
 
-- Application entry point: `ProductsApiApplication`
-- HTTP layer: `HelloController`
-- Model layer: `Person`
-- Configuration: `application.properties`
+- `ProductsApiApplication` - application bootstrap and entry point
+- `HelloController` - REST API endpoints and request handling
+- `Person` - simple Java model object
+- `application.properties` - project configuration
 
-### Main components
+### 1. Application entry point
+The class `ProductsApiApplication` is the main launcher for the Spring application. It is annotated with `@SpringBootApplication`, which enables component scanning and auto-configuration for the project.
 
-1. `ProductsApiApplication`
-   - This is the Spring Boot main class.
-   - It is annotated with `@SpringBootApplication`.
-   - It starts the embedded Tomcat server and initializes the application context.
+When the application starts, Spring Boot creates the application context and begins the embedded server.
 
-2. `HelloController`
-   - This class is annotated with `@RestController`.
-   - It exposes HTTP endpoints like `/hello`, `/status`, and `/goodbye`.
-   - Each method returns a Java string, which Spring converts to an HTTP response.
+### 2. Controller layer
+The `HelloController` class is annotated with `@RestController`. This tells Spring to treat it as a controller that handles incoming HTTP requests.
 
-3. `Person`
-   - A simple Java bean used to demonstrate object modeling.
-   - It contains a `name` field and an `email` field with JavaBean-style accessors.
-   - It illustrates how plain Java classes can be used in a web API context.
+Inside the controller, methods are mapped to routes such as:
 
-4. `application.properties`
-   - Stores application-level configuration.
-   - The current configuration sets the application name to `products-api`.
+- `/hello`
+- `/status`
+- `/goodbye`
 
-## How it works
+Each method returns a String response, which is sent back to the client by the web server.
 
-When the application starts:
+### 3. Model layer
+The `Person` class is a simple Java object that demonstrates a basic model. It contains fields and getters/setters following JavaBean conventions. This is useful for learning how objects are represented and later expanded into more complex data models.
 
-- `ProductsApiApplication.main()` runs.
-- Spring Boot creates the application context.
-- It scans for Spring components such as controllers.
-- `HelloController` is registered as a REST endpoint handler.
+### 4. Configuration
+The `src/main/resources/application.properties` file contains application configuration. In this project, it sets the application name to `products-api`.
 
-When a client sends a request to the API:
+## How the application works
 
-- the HTTP request reaches the embedded server
-- Spring matches the URL path to a controller method
-- the corresponding method is executed
-- the returned value is sent back as an HTTP response
+When the application is launched:
 
-### Example endpoints
+1. Spring Boot starts from `ProductsApiApplication`
+2. The app context is initialized
+3. Spring scans for controller components
+4. `HelloController` is registered as a REST endpoint handler
+5. Incoming HTTP requests are routed to matching methods
+6. The method returns a response, which is sent back to the client
 
-- `GET /hello` -> returns `Hello from Spring Boots!`
-- `GET /status` -> returns the current date and a status message
-- `GET /goodbye` -> returns `Goodbye from Spring Boot!`
+A basic request flow looks like this:
 
-## Project flow
+Client request -> Spring Boot controller -> Java method -> HTTP response
 
-The overall flow is:
+## Example endpoints
 
-Client request -> Spring Boot controller -> method logic -> HTTP response
+The current API includes these routes:
 
-This is a classic MVC-style REST architecture simplified for learning, where the controller acts as the entry point for incoming requests and returns the required response.
+- `GET /hello` -> returns a greeting message
+- `GET /status` -> returns a status string with the current date
+- `GET /goodbye` -> returns a goodbye message
+
+## Project structure
+
+```text
+products-api-2/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── uk/ac/westminster/products_api/
+│   │   │       ├── ProductsApiApplication.java
+│   │   │       ├── HelloController.java
+│   │   │       └── Person.java
+│   │   └── resources/
+│   │       └── application.properties
+│   └── test/
+├── .gitignore
+├── pom.xml
+├── mvnw
+├── mvnw.cmd
+└── README.md
+```
 
 ## Technology stack
 
@@ -83,13 +98,13 @@ This is a classic MVC-style REST architecture simplified for learning, where the
 
 ## Run the project
 
-From the project root, run:
+From the root of the project, run:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-Then open:
+Then open the following URLs in a browser or API client:
 
 - `http://localhost:8080/hello`
 - `http://localhost:8080/status`
@@ -97,4 +112,6 @@ Then open:
 
 ## Summary
 
-This project is a beginner-friendly Spring Boot API example that demonstrates how a small Java web application is structured, how requests are routed, and how responses are returned. It serves as a foundation for building more advanced APIs with database connectivity, business logic, and real product management features.
+This project is a practical introduction to Spring Boot and REST API development. It gives a clear example of how a simple Java web application is structured, how endpoints are created, and how a request is processed from the browser to the backend and back again.
+
+It is a strong starting point for learning more advanced API features such as CRUD operations, validation, database integration, and service-based application design.
