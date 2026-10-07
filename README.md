@@ -1,84 +1,118 @@
 # Products API
 
-This project is a beginner-friendly Spring Boot application created as part of a Java web development tutorial. The main goal is to help students understand how a REST API is structured, how Spring Boot starts an application, and how HTTP requests are mapped to Java methods.
+This project is a Spring Boot-based learning API that demonstrates how to model a simple domain, expose REST endpoints, and document object relationships using UML. It is designed as a beginner-friendly Java web development project for learning API structure, Java classes, and REST conventions.
 
 ## Project purpose
 
-The repository demonstrates the fundamentals of building a simple API with Java and Spring Boot. It introduces the following concepts:
+The repository has evolved from a simple starter application into a small domain-driven example that includes:
 
-- creating a Spring Boot application
-- running an embedded web server
-- exposing REST endpoints with `@RestController`
-- returning simple responses from Java methods
-- organizing basic application classes and configuration
+- product information and basic product modeling
+- customer and address object modeling
+- relationship between a customer and their address
+- REST controllers for serving example data
+- UML documentation for object-oriented design
 
-Although the project is named `products-api`, it is currently a learning starter project rather than a full production ecommerce backend. The focus is on learning the architecture and mechanics of a web API.
+The focus is not just on returning strings from controllers, but on representing real-world entities and the relationships between them in a clean Java design.
+
+## Current project features
+
+The application now includes these core domain classes:
+
+- `product` - represents a product with an id, name, and price
+- `Customer` - represents a customer with id, name, email, and address
+- `Address` - represents a street, city, and postcode
+
+The project also includes:
+
+- Spring Boot application bootstrap with `ProductsApiApplication`
+- `HelloController` for basic demo endpoints
+- `CustomerController` for customer lookup examples
+- `productController` for product data examples
+- UML diagrams stored in the `docs/uml` folder
 
 ## Architecture overview
 
-The application follows a small, straightforward Spring Boot structure:
+The application follows a simple Spring Boot layered structure:
 
-- `ProductsApiApplication` - application bootstrap and entry point
-- `HelloController` - REST API endpoints and request handling
-- `Person` - simple Java model object
-- `application.properties` - project configuration
+- `ProductsApiApplication` - starts the application
+- `HelloController` - handles basic greeting and status routes
+- `CustomerController` - exposes customer example data
+- `productController` - exposes product data examples
+- `Customer`, `Address`, and `product` - domain model classes
+- `application.properties` - application configuration
 
-### 1. Application entry point
-The class `ProductsApiApplication` is the main launcher for the Spring application. It is annotated with `@SpringBootApplication`, which enables component scanning and auto-configuration for the project.
+### Domain model
 
-When the application starts, Spring Boot creates the application context and begins the embedded server.
+The latest commits add object-oriented modeling for product and customer relationships:
 
-### 2. Controller layer
-The `HelloController` class is annotated with `@RestController`. This tells Spring to treat it as a controller that handles incoming HTTP requests.
+- `Address` stores location data
+- `Customer` contains a reference to an `Address`
+- `product` stores product metadata
+- The design reflects a tutorial on encapsulation and UML class associations
 
-Inside the controller, methods are mapped to routes such as:
+This matches the latest learning objectives from the repository history, which include:
 
-- `/hello`
-- `/status`
-- `/goodbye`
+- encapsulation
+- object associations
+- UML diagram creation
+- JSON-friendly Java model design
 
-Each method returns a String response, which is sent back to the client by the web server.
+## API endpoints
 
-### 3. Model layer
-The `Person` class is a simple Java object that demonstrates a basic model. It contains fields and getters/setters following JavaBean conventions. This is useful for learning how objects are represented and later expanded into more complex data models.
-
-### 4. Configuration
-The `src/main/resources/application.properties` file contains application configuration. In this project, it sets the application name to `products-api`.
-
-## How the application works
-
-When the application is launched:
-
-1. Spring Boot starts from `ProductsApiApplication`
-2. The app context is initialized
-3. Spring scans for controller components
-4. `HelloController` is registered as a REST endpoint handler
-5. Incoming HTTP requests are routed to matching methods
-6. The method returns a response, which is sent back to the client
-
-A basic request flow looks like this:
-
-Client request -> Spring Boot controller -> Java method -> HTTP response
-
-## Example endpoints
-
-The current API includes these routes:
+The application currently provides these endpoints:
 
 - `GET /hello` -> returns a greeting message
-- `GET /status` -> returns a status string with the current date
+- `GET /status` -> returns a status message
 - `GET /goodbye` -> returns a goodbye message
+- `GET /customers/{id}` -> returns a customer object with an address
+- `GET /products/{id}` -> returns product details (depending on the controller implementation)
+
+Example customer response:
+
+```json
+{
+  "id": 1,
+  "name": "Ada Lovelace",
+  "email": "ada@example.com",
+  "address": {
+    "street": "115 New Cavendish Street",
+    "city": "London",
+    "postcode": "W1W 6UW"
+  }
+}
+```
+
+## UML documentation
+
+The repository includes UML artifacts under `docs/uml` to support the object-oriented design learning exercises.
+
+Files include:
+
+- `docs/uml/UML.drawio`
+- `docs/uml/Customer_&_Address_UML.drawio .html`
+
+These diagrams illustrate the relationships between the domain classes and help students understand how Java objects are structured and connected.
 
 ## Project structure
 
 ```text
 products-api-2/
+├── docs/
+│   └── uml/
+│       ├── UML.drawio
+│       └── Customer_&_Address_UML.drawio .html
 ├── src/
 │   ├── main/
 │   │   ├── java/
 │   │   │   └── uk/ac/westminster/products_api/
-│   │   │       ├── ProductsApiApplication.java
+│   │   │       ├── Address.java
+│   │   │       ├── Customer.java
+│   │   │       ├── CustomerController.java
 │   │   │       ├── HelloController.java
-│   │   │       └── Person.java
+│   │   │       ├── Person.java
+│   │   │       ├── ProductsApiApplication.java
+│   │   │       ├── product.java
+│   │   │       └── productController.java
 │   │   └── resources/
 │   │       └── application.properties
 │   └── test/
@@ -86,7 +120,8 @@ products-api-2/
 ├── pom.xml
 ├── mvnw
 ├── mvnw.cmd
-└── README.md
+├── README.md
+└── .mvn/
 ```
 
 ## Technology stack
@@ -98,20 +133,28 @@ products-api-2/
 
 ## Run the project
 
-From the root of the project, run:
+From the project root, run:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-Then open the following URLs in a browser or API client:
+Then open the API in a browser or API client using URLs such as:
 
 - `http://localhost:8080/hello`
 - `http://localhost:8080/status`
 - `http://localhost:8080/goodbye`
+- `http://localhost:8080/customers/1`
 
 ## Summary
 
-This project is a practical introduction to Spring Boot and REST API development. It gives a clear example of how a simple Java web application is structured, how endpoints are created, and how a request is processed from the browser to the backend and back again.
+This repository is a progressive learning project showing how a Java Spring Boot API can evolve from a simple greeting app into a more realistic domain model. The recent commits reflect a move toward encapsulation, object relationships, class design, and UML-based understanding.
 
-It is a strong starting point for learning more advanced API features such as CRUD operations, validation, database integration, and service-based application design.
+It is an excellent starting point for learning:
+
+- Java class modeling
+- Spring REST controllers
+- object composition
+- JSON serialization
+- UML and software design basics
+
