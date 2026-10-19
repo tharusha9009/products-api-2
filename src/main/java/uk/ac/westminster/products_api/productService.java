@@ -26,6 +26,11 @@ public class productService {
                 .filter(p -> p.getId().equals(id))
                 .findFirst();
     }
+    public List<product> findByName (String name){
+        return products.stream()
+                .filter(p -> p.getName().contains(name))
+                .toList();
+    }
 
 
     public Optional<product> findById(Long id) {

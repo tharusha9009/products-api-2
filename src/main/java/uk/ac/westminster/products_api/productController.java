@@ -33,7 +33,10 @@ public class productController {
         productService.deleteById(id);
     }
 
-
+    @GetMapping("/products/search")
+    public List<product> search(@RequestParam String name){
+        return productService.findByName(name);
+    }
 
 
 }
