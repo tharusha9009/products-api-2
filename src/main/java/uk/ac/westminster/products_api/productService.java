@@ -14,6 +14,12 @@ public class productService {
     public List<product> getAllproducts(){
         return products;
     }
+    public productService(){
+        DigitalProduct digitalProduct = new DigitalProduct(nextId++ , "Tharusha", 39.00 ,"Adobe-Photoshop", 6700);
+        PhysicalProduct physicalProduct = new PhysicalProduct(nextId++ ,"joeshep" , 40.99 ,30 ,"493hbf" );
+        products.add(digitalProduct);
+        products.add(physicalProduct);
+    }
 
     public product addProduct(product product){
         product.setId(nextId++);
