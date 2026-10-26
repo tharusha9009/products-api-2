@@ -36,6 +36,9 @@ public class product {
         this.price =price;
     }
 
+    public String getSummary(){
+        return "Product : Name : "+name+" | Price : "+price;
+    }
 
 
 

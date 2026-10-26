@@ -18,6 +18,10 @@ public class DigitalProduct extends product{
     public double getFileSizeMb() {
         return fileSizeMb;
     }
+    @Override
+    public String getSummary(){
+        return "Product: Name: "+getName()+" | Price : "+getPrice()+" | Id : "+getId()+" | FileSize :"+getFileSizeMb()+" | Url : "+getDownloadUrl();
+    }
 
 
 }
