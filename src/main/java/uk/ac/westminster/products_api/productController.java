@@ -17,7 +17,12 @@ public class productController {
     }
     @GetMapping("/{id}")
     public product getById(@PathVariable Long id) {
-        return new product(id, "Laptop", 999.99);
+        return new product(id, "Laptop", 999.99) {
+            @Override
+            public String getSummary() {
+                return "";
+            }
+        };
     }
 
     @GetMapping("/products/{id}")
